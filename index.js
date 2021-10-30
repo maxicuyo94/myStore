@@ -5,11 +5,31 @@ const {
   errorHandler,
   boomErrorHandler,
 } = require('./middlewares/error.handler');
+const morgan = require('morgan');
+const cors = require('cors');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
+
+// var corsOptions = {
+//   origin: 'https://localhost:8080',
+//   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+// };
+
+const whitelist = ['http://localhost:8080', 'https://myapp.co'];
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (whitelist.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('no permitido'));
+    }
+  },
+};
 
 app.use(express.json());
+app.use(cors(corsOptions));
+app.use(morgan('dev'));
 
 app.get('/', (req, res) => {
   res.send('Hola mi server en express');

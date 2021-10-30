@@ -6,7 +6,7 @@ const categoriesRouter = require('./categories.routes');
 
 function routerApi(app) {
   const router = Router();
-  app.use('/api/v1', router);
+  app.use('/api/v1', router);//base url
 
   router.use('/products', productsRouter);
   router.use('/users', usersRouter);

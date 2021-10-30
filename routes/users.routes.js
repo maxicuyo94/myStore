@@ -1,5 +1,11 @@
 const express = require('express');
 const ProductsService = require('./../services/products.service'); //fake data
+const validatorHandler = require('./../middlewares/validator.handler');
+const {
+  createProductSchema,
+  updateProductSchema,
+  getProductSchema,
+} = require('./../schemas/product.schema');
 
 const router = express.Router();
 const service = new ProductsService();

@@ -4,7 +4,7 @@ function validatorHandler(schema, property) {
   //clousure para crear un middleware
   return (req, res, next) => {
     const data = req[property];
-    const { error } = schema.validate(data);
+    const { error } = schema.validate(data, { abortEarly: false });
     if (error) {
       next(boom.badRequest(error));
     }
