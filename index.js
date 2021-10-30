@@ -1,5 +1,10 @@
 const express = require('express');
-const routerApi = require('./routes');
+const routerApi = require('./routes/index.routes');
+const {
+  logErrors,
+  errorHandler,
+  boomErrorHandler,
+} = require('./middlewares/error.handler');
 
 const app = express();
 const port = 3000;
@@ -11,6 +16,9 @@ app.get('/', (req, res) => {
 });
 
 routerApi(app);
+app.use(logErrors); //tiene q ir despues de router api
+app.use(boomErrorHandler);
+app.use(errorHandler);
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console
